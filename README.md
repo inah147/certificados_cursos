@@ -1,5 +1,5 @@
 # Certificados para Conclusão de Cursos
-Projeto para gerar automaticamente certificados de conclusão de curso. Este projeto é desenvolvido a partir do google drive, utilizando google sheets, google apresentações e apps Script.
+Projeto para gerar automaticamente certificados de conclusão de curso e enviar por e-mail para os cursantes. Desenvolvido a partir do google drive, utilizando google sheets, google apresentações e apps Script.
 
 # Desenvolvedores
 **Caio Ferreira** - G.E. Professora Inah de Mello 147/SP - [GitHub](https://github.com/CaioFerreiraB) | [Linkedin](https://www.linkedin.com/in/caioferreirab/)
