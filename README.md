@@ -10,7 +10,7 @@ Projeto para gerar automaticamente certificados de conclusão de curso e enviar 
 # Pontos de atenção
 
 1. Para executar este projeto, não é possível utilizar o e-mail do id@escoteiros, devemos utilizar um e-mail do gmail comum.
-2. Até o momento, os cursos com modelos disponíveis para gerar certificados são: **Curso Intermediário** 
+2. Até o momento, os cursos com modelos disponíveis para gerar certificados são: **Curso Preliminar**; **Curso Intermediário**
 3. Caso precise de certificados para um curso não disponível, entre em contato
 4. Caso queira alterar algum modelo existente, é possível alterar o design do ppt, mas não é possível alterar os textos dentro dos sinais <<texto>>. Do contrário, o programa não funcionará
 
