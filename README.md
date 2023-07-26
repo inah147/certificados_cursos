@@ -26,5 +26,9 @@ Para gerar certificados, siga os passos a seguir
 
 **Obs.:** Ao executar o script pela primeira vez, clicando em **Gerador de certificados** e em seguida em **Gerar certificados**, será necessário dar autorização. Selecione a conta, clique em **Avançado**, em seguida em **Acessar Gerador de certificados (não seguro)** e por fim em **Permitir**
 
+# Vídeo Tutorial
+
+Um vídeo tutorial pode ser encontrado no [link](https://drive.google.com/file/d/1yKLrShaMhyiWJSYzGV3K3aDbNbstKCAy/view?usp=sharing)
+
 
 Que este projeto seja muito útil para você 💙🤍💚
