@@ -54,9 +54,11 @@ function criarCertificados(){
     if(row[5] == 'Aprovado'){
 
       // 1. Criar cópia do documento
-      if(LINHA == 'Dirigente'){
+      if(TIPO == 'Curso Preliminar'){
+        copyTemplate = googleSlideTemplate.makeCopy(`Certificado ${TIPO} -  ${row[0]}`, destinationFolder)
+      }
+      else if(LINHA == 'Dirigente'){
         copyTemplate = googleSlideTemplate.makeCopy(`Certificado ${TIPO} ${LINHA}  -  ${row[0]}`, destinationFolder)
-
       }
       else{
         copyTemplate = googleSlideTemplate.makeCopy(`Certificado ${TIPO} ${LINHA} Ramo ${RAMO} -  ${row[0]}`, destinationFolder)
@@ -71,11 +73,14 @@ function criarCertificados(){
       var n_certificado = temp_i + "." + N_CURSO + "/" + (''+CURR_DATE.getFullYear()).substr(2)
 
       presentation.replaceAllText('<<associado>>', row[0]);
-      presentation.replaceAllText('<<curso>>', CURSO);
       presentation.replaceAllText('<<data>>', DATA);
       presentation.replaceAllText('<<n_certificado>>', n_certificado);
       presentation.replaceAllText('<<diretor>>', DIRETOR);
       presentation.replaceAllText('<<local>>', LOCAL);
+
+      if(TIPO != "Curso Preliminar"){
+        presentation.replaceAllText('<<curso>>', CURSO);
+      }
 
 
       // 3. salvar número do certificado
@@ -131,7 +136,10 @@ function enviarEmails(){
   var folder = DriveApp.getFolderById(ID_DESTINO)
 
   var CURSO = null
-  if (LINHA == "Dirigente"){
+  if (TIPO == 'Curso Preliminar'){
+    CURSO = TIPO
+  }
+  else if (LINHA == "Dirigente"){
     CURSO = TIPO + " " + LINHA
   }
   else{
@@ -147,9 +155,11 @@ function enviarEmails(){
       Logger.log('Aprovado')
 
       var fileName = null
-      if(LINHA == 'Dirigente'){
+      if(TIPO == 'Curso Preliminar'){
+        files = folder.getFilesByName(`Certificado ${TIPO} -  ${row[0]}`)
+      }
+      else if(LINHA == 'Dirigente'){
         files = folder.getFilesByName(`Certificado ${TIPO} ${LINHA}  -  ${row[0]}`)
-
       }
       else{
         Logger.log('Escotista')
@@ -166,10 +176,12 @@ function enviarEmails(){
 
       var templateAssociado = HtmlService.createTemplateFromFile('template_email');
       templateAssociado.associado = row[0];
-      templateAssociado.curso = CURSO;
+      
       templateAssociado.responsavel = RESPONSAVEL_ENVIO;
       templateAssociado.funcao = FUNCAO_RESPONSAVEL;
       templateAssociado.distrito = DISTRITO;
+      templateAssociado.curso = CURSO;
+      
       var messageAssociado = templateAssociado.evaluate().getContent();
 
       if(row[4] != ""){
