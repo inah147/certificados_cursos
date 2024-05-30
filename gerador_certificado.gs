@@ -24,18 +24,22 @@ function criarCertificados(){
 
   
   const TIPO = ss.getRange("'Configurações e orientações'!C16").getValues()[0][0]
-  const LINHA = ss.getRange("'Configurações e orientações'!C18").getValues()[0][0]
-  const RAMO = ss.getRange("'Configurações e orientações'!C20").getValues()[0][0]
-  const DIRETOR = ss.getRange("'Configurações e orientações'!C22").getValues()[0][0]
-  const LOCAL = ss.getRange("'Configurações e orientações'!C25").getValues()[0][0]
-  const DATA = ss.getRange("'Configurações e orientações'!C27").getValues()[0][0]
-  const N_CURSO = ss.getRange("'Configurações e orientações'!C30").getValues()[0][0]
-  const ID_CERTIFICADO = ss.getRange("'Configurações e orientações'!C33").getValues()[0][0]
-  const ID_DESTINO = ss.getRange("'Configurações e orientações'!C35").getValues()[0][0]
+  const NOME_CURSO_TECNICO = ss.getRange("'Configurações e orientações'!C18").getValues()[0][0]
+  const LINHA = ss.getRange("'Configurações e orientações'!C20").getValues()[0][0]
+  const RAMO = ss.getRange("'Configurações e orientações'!C22").getValues()[0][0]
+  const DIRETOR = ss.getRange("'Configurações e orientações'!C24").getValues()[0][0]
+  const LOCAL = ss.getRange("'Configurações e orientações'!C27").getValues()[0][0]
+  const DATA = ss.getRange("'Configurações e orientações'!C29").getValues()[0][0]
+  const N_CURSO = ss.getRange("'Configurações e orientações'!C32").getValues()[0][0]
+  const ID_CERTIFICADO = ss.getRange("'Configurações e orientações'!C35").getValues()[0][0]
+  const ID_DESTINO = ss.getRange("'Configurações e orientações'!C37").getValues()[0][0]
   const CURR_DATE = new Date();
 
   var CURSO = null
-  if (LINHA == "Dirigente"){
+  if (TIPO == "Curso Técnico"){
+    CURSO = TIPO + ' - ' + NOME_CURSO_TECNICO
+  }
+  else if (LINHA == "Dirigente"){
     CURSO = LINHA
   }
   else{
@@ -56,6 +60,9 @@ function criarCertificados(){
       // 1. Criar cópia do documento
       if(TIPO == 'Curso Preliminar'){
         copyTemplate = googleSlideTemplate.makeCopy(`Certificado ${TIPO} -  ${row[0]}`, destinationFolder)
+      }
+      else if(TIPO == 'Curso Técnico'){
+        copyTemplate = googleSlideTemplate.makeCopy(`Certificado ${TIPO} ${NOME_CURSO_TECNICO} -  ${row[0]}`, destinationFolder)
       }
       else if(LINHA == 'Dirigente'){
         copyTemplate = googleSlideTemplate.makeCopy(`Certificado ${TIPO} ${LINHA}  -  ${row[0]}`, destinationFolder)
@@ -78,7 +85,7 @@ function criarCertificados(){
       presentation.replaceAllText('<<diretor>>', DIRETOR);
       presentation.replaceAllText('<<local>>', LOCAL);
 
-      if(TIPO != "Curso Preliminar"){
+      if(TIPO != "Curso Intermediário"){
         presentation.replaceAllText('<<curso>>', CURSO);
       }
 
@@ -105,15 +112,7 @@ function criarCertificados(){
 
       sheetAssociados.getRange(12+index_escrita, 8).setValue('-')
     }
-
-    
-
-
-
   })
-
-
-
 }
 
 function enviarEmails(){
@@ -124,19 +123,23 @@ function enviarEmails(){
 
   
   const TIPO = ss.getRange("'Configurações e orientações'!C16").getValues()[0][0]
-  const LINHA = ss.getRange("'Configurações e orientações'!C18").getValues()[0][0]
-  const RAMO = ss.getRange("'Configurações e orientações'!C20").getValues()[0][0]
-  const RESPONSAVEL_ENVIO = ss.getRange("'Configurações e orientações'!C37").getValues()[0][0]
-  const FUNCAO_RESPONSAVEL = ss.getRange("'Configurações e orientações'!C39").getValues()[0][0]
-  const DISTRITO = ss.getRange("'Configurações e orientações'!C41").getValues()[0][0]
+  const NOME_CURSO_TECNICO = ss.getRange("'Configurações e orientações'!C18").getValues()[0][0]
+  const LINHA = ss.getRange("'Configurações e orientações'!C20").getValues()[0][0]
+  const RAMO = ss.getRange("'Configurações e orientações'!C22").getValues()[0][0]
+  const RESPONSAVEL_ENVIO = ss.getRange("'Configurações e orientações'!C39").getValues()[0][0]
+  const FUNCAO_RESPONSAVEL = ss.getRange("'Configurações e orientações'!C41").getValues()[0][0]
+  const DISTRITO = ss.getRange("'Configurações e orientações'!C43").getValues()[0][0]
   
-  const ID_DESTINO = ss.getRange("'Configurações e orientações'!C35").getValues()[0][0]
+  const ID_DESTINO = ss.getRange("'Configurações e orientações'!C37").getValues()[0][0]
 
 
   var folder = DriveApp.getFolderById(ID_DESTINO)
 
   var CURSO = null
   if (TIPO == 'Curso Preliminar'){
+    CURSO = TIPO + ' - ' + NOME_CURSO_TECNICO
+  }
+  else if (TIPO == 'Curso Técnico'){
     CURSO = TIPO
   }
   else if (LINHA == "Dirigente"){
@@ -157,6 +160,9 @@ function enviarEmails(){
       var fileName = null
       if(TIPO == 'Curso Preliminar'){
         files = folder.getFilesByName(`Certificado ${TIPO} -  ${row[0]}`)
+      }
+      else if(TIPO == 'Curso Técnico'){
+        files = folder.getFilesByName(`Certificado ${TIPO} ${NOME_CURSO_TECNICO} -  ${row[0]}`)
       }
       else if(LINHA == 'Dirigente'){
         files = folder.getFilesByName(`Certificado ${TIPO} ${LINHA}  -  ${row[0]}`)
@@ -193,24 +199,6 @@ function enviarEmails(){
         });
 
       }
-
-
-
     }
   })
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
